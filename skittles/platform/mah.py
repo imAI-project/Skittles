@@ -46,6 +46,11 @@ class MiraiAPIHTTPAdapter(model.AbsPlatformAdapter):
                     ''
                 )
             else: # 消息
+                session_key = None
+                for key, value in self.session_keys.items():
+                    if value['websocket'] == req['websocket']:
+                        session_key = key
+                        break
                 await self.handler(session_key, req)
 
         async def http_handler(req):

@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="skittles",
-    version="0.0.1",
+    version="0.0.2",
     description="mirai-api-http Mock 测试工具",
     long_description=open("README.md", "rt", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
@@ -14,8 +14,8 @@ setup(
     author="RockChinQ",
     author_email="1010553892@qq.com",
     license="GNU Affero General Public License v3.0",
-    packages=find_namespace_packages("skittles"),
-    package_dir={"": "skittles"},
+    packages=find_namespace_packages(".", exclude="tests"),
+    package_dir={"": "."},
     py_modules=["skittles"],
     package_data={"": ["*.json"]},
     install_requires=[

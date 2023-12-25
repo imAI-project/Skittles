@@ -38,6 +38,4 @@ class WSDriver(model.AbsDriver):
                 }
                 await self.handler(req)
 
-            print(f"<<< {connection_id} disconnected")
-
         return await websockets.serve(handler, host, port)

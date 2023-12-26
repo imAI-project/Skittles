@@ -106,3 +106,9 @@ class MiraiAPIHTTPAdapter(model.AbsPlatformAdapter):
 
     async def send(self, bot: bot.Bot, data: dict, sync_id: str = '', connection_type: connection.ConnectionType=connection.ConnectionType.FORWARD_WS) -> bool:
         return await self._ws_send(bot, data, sync_id)
+
+    async def kill(self):
+        for session in self.sessions:
+            await session['connections']['ws']['websocket'].close()
+
+        await self.forward_ws.kill()

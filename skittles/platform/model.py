@@ -33,3 +33,7 @@ class AbsPlatformAdapter(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     async def run(self, bots: typing.List[bot.Bot]):
         pass
+
+    @abc.abstractmethod
+    async def kill(self):
+        pass

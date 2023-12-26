@@ -1,3 +1,5 @@
+import asyncio
+
 import quart
 
 from . import model
@@ -33,4 +35,10 @@ class HTTPDriver(model.AbsDriver):
         host = kwargs.get('host', '0.0.0.0')
         port = kwargs.get('port', 8181)
         debug = kwargs.get('debug', False)
+
+        self.loop = asyncio.get_event_loop()
+
         return await app.run_task(host, port, debug=debug)
+
+    async def kill(self):
+        self.loop.stop()

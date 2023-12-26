@@ -1,10 +1,11 @@
 import abc
+import typing
 
 
 class AbsDriver(metaclass=abc.ABCMeta):
 
-    handler: callable
+    handler: typing.Callable
 
     @abc.abstractmethod
-    async def run(self) -> int:
+    async def run(self, **kwargs):
         pass

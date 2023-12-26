@@ -8,7 +8,7 @@ class HTTPDriver(model.AbsDriver):
     def __init__(self, handler: callable):
         self.handler = handler
 
-    async def run(self, **kwargs) -> int:
+    async def run(self, **kwargs):
         app = quart.Quart(__name__)
         
         # 监听所有的 HTTP 请求

@@ -22,6 +22,7 @@ setup(
         "websockets",
         "pydantic",
         "quart",
+        "aiocqhttp",
     ],
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

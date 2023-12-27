@@ -31,7 +31,7 @@ class AbsPlatformAdapter(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    async def run(self, bots: typing.List[bot.Bot]):
+    async def run(self, bots: typing.List[bot.Bot], **kwargs):
         pass
 
     @abc.abstractmethod

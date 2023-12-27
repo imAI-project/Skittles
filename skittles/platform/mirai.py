@@ -34,6 +34,8 @@ class MiraiAPIHTTPAdapter(model.AbsPlatformAdapter):
     ]
     """
 
+    verify_key: str = None
+
     def __init__(self):
         self.sessions = []
 
@@ -41,9 +43,33 @@ class MiraiAPIHTTPAdapter(model.AbsPlatformAdapter):
         for bot in bots:
             await self._ws_send(bot, event, sync_id='-1')
 
-    async def run(self, bots: typing.List[bot.Bot]):
+    async def run(self, bots: typing.List[bot.Bot], verify_key: str = None):
+        """
+        启动服务端，阻塞运行
+
+        :param bots: Bot列表
+        :param verify_key: 验证密钥，可选，不设置时不验证
+        """
+        self.verify_key = verify_key
+
         async def ws_handler(websocket: websockets.WebSocketServerProtocol, path: str):
             
+            # 验证密钥
+            verify_key = None
+            if 'verifyKey' in websocket.request_headers:
+                verify_key = websocket.request_headers['verifyKey']
+            else:
+                # 取路径中的参数: /ws?verify_key=yirimirai
+                extra = re.findall(r'\?verifyKey=(.+)', path)
+                if len(extra) > 0:
+                    verify_key = extra[0]
+            if self.verify_key is not None and verify_key != self.verify_key:
+                await self._ws_send_login_msg(websocket, {
+                    'code': 1,
+                    'msg': '错误的verify key'
+                })
+                return await websocket.close()
+
             qq = 0
             if 'qq' in websocket.request_headers:
                 qq = int(websocket.request_headers['qq'])

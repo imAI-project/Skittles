@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="skittles",
-    version="0.1.0",
+    version="0.1.1",
     description="mirai-api-http Mock 测试工具",
     long_description=open("README.md", "rt", encoding="utf-8").read(),
     long_description_content_type="text/markdown",

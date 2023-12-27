@@ -7,13 +7,13 @@ from ..entity import bot, connection
 class AbsPlatformAdapter(metaclass=abc.ABCMeta):
 
     _action_handler: typing.Callable[
-        [bot.Bot, connection.ConnectionType, dict, typing.Any],
+        [bot.Bot, connection.ConnectionType, str],
         typing.Coroutine[typing.Any, typing.Any, typing.Any]
     ]
     """动作处理器"""
 
     def action_handler(self, handler: typing.Callable[
-        [bot.Bot, connection.ConnectionType, dict, typing.Any],
+        [bot.Bot, connection.ConnectionType, str],
         typing.Coroutine[typing.Any, typing.Any, typing.Any]
     ]):
         """

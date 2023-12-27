@@ -2,7 +2,9 @@ import asyncio
 from typing import List
 import uuid
 import typing
+import logging
 import json
+import re
 
 import websockets
 
@@ -42,7 +44,14 @@ class MiraiAPIHTTPAdapter(model.AbsPlatformAdapter):
     async def run(self, bots: typing.List[bot.Bot]):
         async def ws_handler(websocket: websockets.WebSocketServerProtocol, path: str):
             
-            qq = websocket.request_headers['qq']
+            qq = 0
+            if 'qq' in websocket.request_headers:
+                qq = int(websocket.request_headers['qq'])
+            else:
+                # 取路径中的参数: /ws?qq=12345678
+                extra = re.findall(r'\?qq=(\d+)', path)
+                if len(extra) > 0:
+                    qq = int(extra[0])
 
             bot_obj = None
 
